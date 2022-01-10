@@ -9,9 +9,10 @@ namespace lb6
 {
     class Tests
     {
-        private IWebDriver driver;
-        public IDictionary<string, object> vars { get; private set; }
-        private IJavaScriptExecutor js;
+        public static string path = "https://dungeon.su/spells/";
+        string logo = "body > main > div > div.left.sticky > section:nth-child(1) > div > ul > li:nth-child(2) > ul > li:nth-child(1) > a";
+        string search_input = "body > main > div > div.center > div > section.block.block_100.search_form > form > div:nth-child(1) > div:nth-child(1) > div > input";
+
         [SetUp]
         public void SetUp()
         {
@@ -27,7 +28,7 @@ namespace lb6
         [Test]
         public void opensite()
         {
-            driver.Navigate().GoToUrl("https://www.wildberries.ru/?_tt=1641384393519");
+            driver.Navigate().GoToUrl(path);
             driver.Manage().Window.Size = new System.Drawing.Size(1366, 768);
             System.Threading.Thread.Sleep(1000);
 
@@ -36,31 +37,33 @@ namespace lb6
         [Test]
         public void searchonsite()
         {
-            driver.Navigate().GoToUrl("https://www.wildberries.ru/?_tt=1641384393519");
+            driver.Navigate().GoToUrl(path);
             driver.Manage().Window.Size = new System.Drawing.Size(1366, 768);
-            driver.FindElement(By.CssSelector("#searchInput")).Click();
-            driver.FindElement(By.CssSelector("#searchInput")).SendKeys("iphone");
-            System.Threading.Thread.Sleep(1000);
-            driver.FindElement(By.CssSelector("#searchInput")).SendKeys(Keys.Enter);
-            System.Threading.Thread.Sleep(1000);
-            driver.FindElement(By.CssSelector(".nav-element__logo")).Click();
-            driver.FindElement(By.CssSelector("#searchInput")).SendKeys("");
-            driver.FindElement(By.CssSelector("#searchInput")).SendKeys("Кросовки Nike");
-            System.Threading.Thread.Sleep(1000);
 
+            driver.FindElement(By.CssSelector(search_input)).Click();
+            driver.FindElement(By.CssSelector(search_input)).SendKeys("огонь");
+            System.Threading.Thread.Sleep(1000);
+            driver.FindElement(By.CssSelector(search_input)).SendKeys(Keys.Enter);
+            System.Threading.Thread.Sleep(1000);
+            driver.FindElement(By.CssSelector(logo)).Click();
+            driver.FindElement(By.CssSelector(search_input)).SendKeys("");
+            driver.FindElement(By.CssSelector(search_input)).SendKeys("лед");
+            System.Threading.Thread.Sleep(1000);
+            driver.FindElement(By.CssSelector(search_input)).SendKeys(Keys.Enter);
+            System.Threading.Thread.Sleep(1000);
         }
 
 
         [Test]
         public void nothingmatches()
         {
-            driver.Navigate().GoToUrl("https://www.wildberries.ru/?_tt=1641384393519");
+            driver.Navigate().GoToUrl(path);
             driver.Manage().Window.Size = new System.Drawing.Size(1366, 768);
 
-            driver.FindElement(By.CssSelector("#searchInput")).Click();
-            driver.FindElement(By.CssSelector("#searchInput")).SendKeys("якнчсиротлб");
+            driver.FindElement(By.CssSelector(search_input)).Click();
+            driver.FindElement(By.CssSelector(search_input)).SendKeys("якнчсиротлб");
             System.Threading.Thread.Sleep(1000);
-            driver.FindElement(By.CssSelector("#searchInput")).SendKeys(Keys.Enter);
+            driver.FindElement(By.CssSelector(search_input)).SendKeys(Keys.Enter);
             System.Threading.Thread.Sleep(1000);
             driver.FindElements(By.CssSelector("p.catalog-page--non-search"));
             System.Threading.Thread.Sleep(1000);
