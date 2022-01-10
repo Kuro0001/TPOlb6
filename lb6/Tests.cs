@@ -12,7 +12,11 @@ namespace lb6
         public static string path = "https://dungeon.su/spells/";
         string logo = "body > main > div > div.left.sticky > section:nth-child(1) > div > ul > li:nth-child(2) > ul > li:nth-child(1) > a";
         string search_input = "body > main > div > div.center > div > section.block.block_100.search_form > form > div:nth-child(1) > div:nth-child(1) > div > input";
+        string search_non_text = "body > main > div > div.center > div > section:nth-child(2) > div > div > div.card-header > h2";
 
+        private IWebDriver driver;
+        public IDictionary<string, object> vars { get; private set; }
+        private IJavaScriptExecutor js;
         [SetUp]
         public void SetUp()
         {
@@ -65,7 +69,7 @@ namespace lb6
             System.Threading.Thread.Sleep(1000);
             driver.FindElement(By.CssSelector(search_input)).SendKeys(Keys.Enter);
             System.Threading.Thread.Sleep(1000);
-            driver.FindElements(By.CssSelector("p.catalog-page--non-search"));
+            driver.FindElements(By.CssSelector(search_non_text));
             System.Threading.Thread.Sleep(1000);
 
         }
